@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구구단</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{firstVal}} 곱하기 {{secondVal}} 는?</div>
+        <form>
+            <input type="number" ref="answer" v-model="value"/>
+            <button type="submit" v-on:click="onSubmitValue">입력</button>
+        </form>
+        <div v-if="result">딩동댕</div>
+        <div v-else>땡</div>
+    </div>
+    <script>
+        const app = new Vue({
+            el: `#root`,
+            data: {
+                firstVal: Math.ceil( Math.random() * 9 ),
+                secondVal: Math.ceil( Math.random() * 9 ),
+                value: '',
+                result: false
+            },
+            methods: {
+                onSubmitValue(e) {
+                    e.preventDefault();
+                    if ((this.firstVal * this.secondVal) === parseInt(this.value)) {
+                        this.result = true;
+                        this.firstVal = Math.ceil( Math.random() * 9 );
+                        this.secondVal = Math.ceil( Math.random() * 9 );
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    } else {
+                        this.result = false;
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
