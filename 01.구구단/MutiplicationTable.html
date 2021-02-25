@@ -27,7 +27,7 @@
             },
             methods: {
                 onSubmitValue(e) {
-                    e.preventDefault();
+                    e.preventDefault(); // vue, react 같이 spa는 새로고침을 막아야함
                     if ((this.firstVal * this.secondVal) === parseInt(this.value)) {
                         this.result = true;
                         this.firstVal = Math.ceil( Math.random() * 9 );

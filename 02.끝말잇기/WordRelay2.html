@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>끝말잇기 - 컴포넌트</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!-- 반복되는 부분을 컴포넌트로 만든다. -->
+    <!-- 렌더링 : 화면에 표시하는 것 -->
+    <!-- 컴포넌트는 중복을 피하고 재사용을 위해 사용한다. 
+         컴포넌트에 달라지는 부분은 props를 사용한다. -->
+    <div id="root">
+        <word-relay start-word="가용용"></word-relay>
+        <word-relay start-word="용가리"></word-relay>
+        <word-relay start-word="연습"></word-relay>
+    </div>
+    <script>
+        /* 
+            PascalCase ex) WordRelay
+            camelCase ex) wordRelay
+            kebab-case ex) word-relay
+         */
+        // 백틱 문자열 (`) - 백틱 사용 시 줄바꿈할 때 편함
+        Vue.component('word-relay', { // 전역 컴포넌트
+            template: `
+                <div>
+                    <div>{{word}}</div>
+                    <form v-on:submit="onSubmitForm">
+                        <input type="text" ref="answer" v-model="value"/>
+                        <button type="submit">입력</button>
+                    </form>
+                    <div>{{result}}</div>
+                </div>
+            `,
+            props: ['startWord'],
+            // component 마다 data가 달라야함.(data 분리)
+            // 새로운 객체를 만들어서 return
+            data() {
+                return {
+                    word: this.startWord,
+                    result: '',
+                    value: ''
+                }
+            }, 
+            methods: {
+                onSubmitForm(e) {
+                    e.preventDefault();
+                    if (this.word[this.word.length - 1] === this.value[0]) {
+                        this.result = '딩동댕';
+                        this.word = this.value;
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    } else {
+                        this.result = '떙';
+                        this.value = '';
+                    }
+                }
+            }
+        })
+    </script>
+    <script>
+        // vue instance        
+        const app = new Vue({
+            el: '#root'
+        });
+    </script>
+
+    <!-- webpack
+    1. script가 여러개 있을 떄의 복잡함을 webpack이 하나로 합쳐준다.
+    -->
+</body>
+</html>
