@@ -37,7 +37,5 @@ module.exports = {
         path: path.join(__dirname, 'dist'), //현재경로
         publicPath: '/dist', // webpack-run-server option
     },
-    // webpack-dev-server 는 파일을 메모리에 저장. 실제 파일로는 생성하지 않는다.
-    // dist 폴더 안만들어도 메모리에 생겨 불러올 수 있다.
 }
 
